@@ -35,6 +35,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
@@ -67,6 +68,10 @@ private fun rememberAnnotatedStringForDemo(isRowLayoutActive: Boolean): Annotate
             append("By continuing you agree to the EasyPark ")
             pushLink(
                 LinkAnnotation.Url(
+                    styles = TextLinkStyles(
+                        style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline),
+                        pressedStyle = SpanStyle(color = Color.Magenta)
+                    ),
                     url = "https://example.com/terms",
                     linkInteractionListener = {
                         Log.d(
@@ -76,14 +81,16 @@ private fun rememberAnnotatedStringForDemo(isRowLayoutActive: Boolean): Annotate
                     }
                 )
             )
-            withStyle(SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
-                append("Terms & Conditions")
-            }
+            append("Terms & Conditions")
             pop()
             append(" and ")
             pushLink(
                 LinkAnnotation.Url(
                     url = "https://example.com/privacy",
+                    styles = TextLinkStyles(
+                        style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline),
+                        pressedStyle = SpanStyle(color = Color.Magenta)
+                    ),
                     linkInteractionListener = {
                         Log.d(
                             TAG,
@@ -92,9 +99,7 @@ private fun rememberAnnotatedStringForDemo(isRowLayoutActive: Boolean): Annotate
                     }
                 )
             )
-            withStyle(SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
-                append("Privacy Policy")
-            }
+            append("Privacy Policy")
             pop()
         }
     }
@@ -158,7 +163,7 @@ private fun ProblematicRowLayout(
         Spacer(Modifier.width(8.dp))
         Text(
             text = annotatedString,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .weight(1f)
                 .border(1.dp, Color.Red)
@@ -176,7 +181,7 @@ private fun TextOnlyLayout(annotatedString: AnnotatedString) {
     )
     Text(
         text = annotatedString,
-        style = MaterialTheme.typography.bodyLarge,
+        style = MaterialTheme.typography.headlineLarge,
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, Color.Magenta)
@@ -210,7 +215,7 @@ private fun IssueSample() {
             TAG,
             "BUG_REPORT: AnnotatedString Text: '${annotatedString.text}' (Length: ${annotatedString.length})"
         )
-        annotatedString.getStringAnnotations(0, annotatedString.length)
+        annotatedString.getLinkAnnotations(0, annotatedString.length)
             .forEachIndexed { index, range ->
                 val linkText = annotatedString.text.substring(range.start, range.end)
                 Log.d(
