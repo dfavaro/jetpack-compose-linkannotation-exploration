@@ -76,7 +76,12 @@ private fun rememberAnnotatedStringForDemo(isRowLayoutActive: Boolean): Annotate
                     }
                 )
             )
-            withStyle(SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+            withStyle(
+                SpanStyle(
+                    color = Color.Blue,
+                    textDecoration = TextDecoration.Underline,
+                )
+            ) {
                 append("Terms & Conditions")
             }
             pop()
@@ -92,7 +97,12 @@ private fun rememberAnnotatedStringForDemo(isRowLayoutActive: Boolean): Annotate
                     }
                 )
             )
-            withStyle(SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)) {
+            withStyle(
+                SpanStyle(
+                    color = Color.Blue,
+                    textDecoration = TextDecoration.Underline
+                )
+            ) {
                 append("Privacy Policy")
             }
             pop()
@@ -125,7 +135,7 @@ private fun LayoutToggleButton(useRowLayout: Boolean, onToggle: () -> Unit) {
 }
 
 @Composable
-private fun ProblematicRowLayout(
+private fun RowLayout(
     annotatedString: AnnotatedString,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
@@ -148,7 +158,7 @@ private fun ProblematicRowLayout(
             .semantics(mergeDescendants = true) {}
             .padding(vertical = 8.dp)
             .border(1.dp, Color.Green),
-        verticalAlignment = Alignment.Top
+        verticalAlignment = Alignment.Top,
     ) {
         Checkbox(
             checked = checked,
@@ -229,7 +239,7 @@ private fun IssueSample() {
         LayoutToggleButton(useRowLayout = useRowLayout, onToggle = { useRowLayout = !useRowLayout })
 
         if (useRowLayout) {
-            ProblematicRowLayout(
+            RowLayout(
                 annotatedString = annotatedString,
                 checked = checked,
                 onCheckedChange = { newCheckedState ->
